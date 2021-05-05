@@ -1,0 +1,48 @@
+#container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "nav"
+    "content";
+  grid-template-rows: 10% 90%;
+}
+
+body {
+  position: relative;
+}
+
+#content {
+  grid-area: content;
+}
+fieldset {
+  border: 1px solid black;
+  margin: 20px;
+  -webkit-box-shadow: 5px 5px 15px 5px #000000;
+  box-shadow: 5px 5px 15px 5px #000000;
+}
+
+#addProfileBtn {
+  float: right;
+  margin-bottom: 2px;
+}
+#navbar {
+  grid-area: nav;
+  background-color: gainsboro;
+}
+
+#navbar p {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-family: "Catamaran", sans-serif;
+  font-style: italic;
+}
+
+body {
+    font-family: "Roboto Mono", monospace;
+}
+
+h3 {
+    text-align: center;
+}
