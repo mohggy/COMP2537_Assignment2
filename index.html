@@ -17,11 +17,10 @@
       <p>Profile Page</p>
     </div>
     <div id="content">
-
-
       <div id="userInput">
         <form>
-          <fieldset>
+          <fieldset data-id="0" id="inputField">
+          <h2 id="formTitle">Add profile</h2>
           <label for="firstName">First Name</label>
           <input type="text" id="firstName" name="fName"><br>
           <label for="lastName">Last Name</label>
@@ -32,8 +31,8 @@
           <input type="text" id="age" name="age"><br>
           <label for="job">Job</label>
           <input type="text" id="job" name="job"><br>
-          <button id="addProfileBtn">ADD</button>
-
+          <button id="addProfileBtn" class="addProfileBtn">ADD</button>
+          <button class="cancelBtn">CANCEL</button>
         </fieldset>
         </form>
       </div>

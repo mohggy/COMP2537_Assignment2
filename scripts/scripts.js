@@ -2,14 +2,53 @@
 
 const profileTemplate = ({ ID, firstName, lastName, email, age, job }) =>
   `
-  <div id="input${ID}"></div>
-  <p>${firstName}</p>
-  <p>${lastName}</p>
-  <p>${email}</p>
-  <p class="${ID}" ><span data-id=${ID} data-age="${age}">${age}</span></p>
-  <p>${job}</p>
-  <button data-id="${ID}" class="deleteProfileBtn"> DELETE </button>
+  <div>
+    <div id="input${ID}"></div>
+    <p>${firstName}</p>
+    <p>${lastName}</p>
+    <p>${email}</p>
+    <p>${age}</p>
+    <p>${job}</p>
+    <button data-id="${ID}" class="deleteProfileBtn">DELETE</button>
+    <button data-id="${ID}"
+            data-first="${firstName}"
+            data-last="${lastName}"
+            data-email="${email}"
+            data-age="${age}"
+            data-job="${job}"
+            class="editProfileBtn">UPDATE</button>
+  </div>
                 `;
+  
+const resetForm = () => {
+  $("#firstName").val("");
+  $("#lastName").val("");
+  $("#email").val("");
+  $("#age").val("");
+  $("#job").val("");
+};
+
+const setUpForEdit = (firstName, lastName, email, age, job) => {
+  $("#formTitle").text("Edit profile");
+  $("#firstName").val(firstName);
+  $("#lastName").val(lastName);
+  $("#email").val(email);
+  $("#age").val(age);
+  $("#job").val(job);
+  $("#addProfileBtn").text("UPDATE");
+  $("#addProfileBtn").addClass("updateBtn");
+  $("#addProfileBtn").removeClass("addProfileBtn");
+  $("#inputField").css("background-color", "yellow");
+};
+
+const setUpForAdd = () => {
+  $("#formTitle").text("Add profile");
+  resetForm();
+  $("#addProfileBtn").text("ADD");
+  $("#addProfileBtn").addClass("addProfileBtn");
+  $("#addProfileBtn").removeClass("updateBtn");
+  $("#inputField").css("background-color", "white");
+}
 
 const renderProfile = (profiles, target) => {
   console.log(profiles);
@@ -18,24 +57,34 @@ const renderProfile = (profiles, target) => {
     .join("");
   $(target).html(html);
 
-  $("#profileData").on("click", ({target}) => {
-    console.log('profile data');
-    const {dataset: {id = 0, age}} = target;
-    if(id === 0){
-      return;
+  const el = document.querySelector("#inputField");
+
+  $(".cancelBtn").on("click", () => {
+    setUpForAdd();
+  });
+
+  $(".editProfileBtn").on("click", ({target}) => {
+    const {dataset: {id, first, last, email, age, job}} = target;
+    console.log("edit clicked id = " + id);
+    el.dataset.id = id;
+
+    setUpForEdit(first, last, email, age, job);
+    console.log("edit clicked id = " + id);
+  });
+
+  $("#addProfileBtn").on("click", () => {
+    const newFirst =  $("#firstName").val();
+    const newLast = $("#lastName").val();
+    const newEmail = $("#email").val();
+    const newAge = $("#age").val();
+    const newJob = $("#job").val();
+    if(el.dataset.id === "0"){
+      console.log("ADD called");
+      addProfile(newFirst, newLast, newEmail, newAge, newJob);
+    } else {
+      updateProfile(parseInt(el.dataset.id, 10), newFirst, newLast, newEmail, newAge, newJob);
+      setUpForAdd();
     }
-    const updateInput = 
-    `<input id="updateAgeInput" type="text" name="age" value="${age}"><br>
-    `;
-    $(`#input${id}`).html(updateInput);
-    
-    $('#updateAgeInput').keypress((e) => {
-      if(e.which == 13){
-        console.log("key up!!!");
-        const newAge = $('#updateAgeInput').val();
-        updateProfile(id, newAge);
-      }
-    });
   });
 };
 
@@ -63,36 +112,29 @@ const getProfiles = () => {
   });
 };
 
-const addProfile = () => {
-  $("#addProfileBtn").click(function (e) {
-    e.preventDefault();
+const addProfile = (firstName, lastName, email, age, job) => {
+  let formData = {
+    firstName,
+    lastName,
+    email,
+    age,
+    job,
+  };
 
-    let formData = {
-      firstName: $("#firstName").val(),
-      lastName: $("#lastName").val(),
-      email: $("#email").val(),
-      age: $("#age").val(),
-      job: $("#job").val(),
-    };
-
-    $.ajax({
-      url: "/add-profile",
-      dataType: "json",
-      type: "POST",
-      data: formData,
-      success: function (data) {
-        getProfiles();
-        $("#firstName").val("");
-        $("#lastName").val("");
-        $("#email").val("");
-        $("#age").val("");
-        $("#job").val("");
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        $("#profileData").text(jqXHR.statusText);
-        console.log("ERROR:", jqXHR, textStatus, errorThrown);
-      },
-    });
+  $.ajax({
+    url: "/add-profile",
+    dataType: "json",
+    type: "POST",
+    data: formData,
+    success: function (data) {
+      console.log("success!");
+      getProfiles();
+      resetForm();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      $("#profileData").text(jqXHR.statusText);
+      console.log("ERROR:", jqXHR, textStatus, errorThrown);
+    },
   });
 };
 
@@ -103,7 +145,6 @@ const removeProfile = (id) => {
     type: "POST",
     data: { id },
     success: function (data) {
-      console.log(id);
       getProfiles();
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -113,12 +154,12 @@ const removeProfile = (id) => {
   });
 };
 
-const updateProfile = (id, newAge) => {
+const updateProfile = (id, first, last, email, age, job) => {
   $.ajax({
     url:"/update-profile",
     dataType: "json",
     type: "POST",
-    data: {id, newAge},
+    data: {id, first, last, email, age, job},
     success: function (data) {
       getProfiles();
     },
@@ -126,86 +167,9 @@ const updateProfile = (id, newAge) => {
       $("#profileData").text(jqXHR.statusText);
       console.log("ERROR:", jqXHR, textStatus, errorThrown);
     },
-
   });
 };
-
-const editProfile = () => {
-  $("#profileData").on("click", "span", function () {
-    if ($(this).parent().attr("class") === "age") {
-      let spanText = $(this).text();
-      let p = $(this).parent();
-      let input = $("<input type='text' value'" + spanText + "'>");
-      td.html(input);
-      keyup();
-      // $(input).keyup(function (e) {
-      //   let val = null;
-      //   let span = null;
-      //   if (e.which == 13) {
-      //     val = $(input).val();
-      //     span = $("<span>" + val + "</span>");
-      //     td.html(span);
-
-      //     let dataToSend = {
-      //       id: p.parent().find(age).html,
-      //       age: val,
-      //     };
-      //     $.ajax({
-      //       url: "/update-profile",
-      //       dataType: "json",
-      //       type: "POST",
-      //       data: dataToSend,
-      //       success: function (data) {
-      //         //console.log(data);
-      //         $("#profileData").html("DB updated.");
-      //         getProfiles();
-      //       },
-      //       error: function (jqXHR, textStatus, errorThrown) {
-      //         $("#profileData").text(jqXHR.statusText);
-      //         console.log("ERROR:", jqXHR, textStatus, errorThrown);
-      //       },
-      //     });
-      //   }
-      // });
-    };
-  });
-};
-
-const keyUp = () => {
-  $(input).keyup(function (e) {
-    let val = null;
-    let span = null;
-    if (e.which == 13) {
-      val = $(input).val();
-      span = $("<span>" + val + "</span>");
-      td.html(span);
-
-      let dataToSend = {
-        id: p.parent().find(age).html,
-        age: val,
-      };
-      $.ajax({
-        url: "/update-profile",
-        dataType: "json",
-        type: "POST",
-        data: dataToSend,
-        success: function (data) {
-          //console.log(data);
-          $("#profileData").html("DB updated.");
-          getProfiles();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          $("#profileData").text(jqXHR.statusText);
-          console.log("ERROR:", jqXHR, textStatus, errorThrown);
-        },
-      });
-    }
-  });
-}
 
 $(document).ready(() => {
   getProfiles();
-  addProfile();
-  editProfile();
-  keyUp();
 });

@@ -122,20 +122,20 @@ app.post("/delete-by-ID", function (req, res) {
 });
 
 // POST: updating the profile
-app.post('/update-profile', function (req, res) {
-    res.setHeader('Content-Type', 'application/json');
+app.post("/update-profile", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
 
     let connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'insync'
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "insync"
     });
     connection.connect();
-    const {body: {id, newAge}} = req;
+    const {body: {id, first, last, email, age, job}} = req;
 
-    connection.query('UPDATE profile SET age = ? WHERE ID = ?',
-          [newAge, id],
+    connection.query("UPDATE profile SET firstName = ?, lastName =?, email = ?, age = ?, job = ? WHERE ID = ?",
+          [first, last, email, age, job, id],
           function (error, results, fields) {
       if (error) {
           throw error;
@@ -151,5 +151,5 @@ app.post('/update-profile', function (req, res) {
 // RUN SERVER
 let port = 8000;
 app.listen(port, function () {
-console.log('CRUD app listening on port ' + port + '!');
-})
+console.log("CRUD app listening on port " + port + "!");
+});
