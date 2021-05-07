@@ -10,7 +10,7 @@ app.get("/", function (req, res) {
   const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Friday23",
+    password: "",
     multipleStatements: true,
   });
 
@@ -45,7 +45,7 @@ app.get("/get-profile", function (req, res) {
   let connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Friday23",
+    password: "",
     database: "insync",
   });
   connection.connect();
@@ -69,7 +69,7 @@ app.post("/add-profile", function (req, res) {
   let connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Friday23",
+    password: "",
     database: "insync",
   });
   connection.connect();
@@ -102,7 +102,7 @@ app.post("/delete-by-ID", function (req, res) {
   let connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Friday23",
+    password: "",
     database: "insync",
   });
   connection.connect();
@@ -128,7 +128,7 @@ app.post("/update-profile", function (req, res) {
     let connection = mysql.createConnection({
       host: "localhost",
       user: "root",
-      password: "Friday23",
+      password: "",
       database: "insync"
     });
     connection.connect();
