@@ -11,6 +11,7 @@
 body {
   position: relative;
   background-color: rgb(37, 68, 109);
+  font-family: 'Anton', sans-serif;
 }
 
 #content {
@@ -41,9 +42,6 @@ fieldset {
   margin-top: -25px;
 }
 
-body {
-  font-family: 'Anton', sans-serif;
-}
 
 h3 {
     text-align: center;
@@ -70,7 +68,7 @@ h3 {
   border-radius: 25px;
 }
 
-#menu {
+.menu {
   width: 45px;
   height: 5px;
   background-color: black;
