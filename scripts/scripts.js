@@ -79,7 +79,6 @@ const renderProfile = (profiles, target) => {
     const newAge = $("#age").val();
     const newJob = $("#job").val();
     if(el.dataset.id === "0"){
-      console.log("ADD called");
       addProfile(newFirst, newLast, newEmail, newAge, newJob);
     } else {
       updateProfile(parseInt(el.dataset.id, 10), newFirst, newLast, newEmail, newAge, newJob);
@@ -171,5 +170,11 @@ const updateProfile = (id, first, last, email, age, job) => {
 };
 
 $(document).ready(() => {
+  $(window).keydown((event) =>{
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
   getProfiles();
 });
