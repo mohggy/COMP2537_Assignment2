@@ -1,3 +1,13 @@
+CREATE TABLE profile (
+    ID int NOT NULL AUTO_INCREMENT,
+    firstName varchar(30) NOT NULL,
+    lastName varchar(30) NOT NULL,
+    email varchar(30) NOT NULL,
+    age int NOT NULL,
+    job varchar(50) NOT NULL,
+    PRIMARY KEY (ID)
+);
+
 INSERT INTO profile VALUES (1, 'Ramona', 'Brown', 'rbrown@hotmail.ca', 30, 'Nurse');
 INSERT INTO profile VALUES (2, 'Mary', 'Green', 'mgreen@hotmail.ca', 25, 'Manager');
 INSERT INTO profile VALUES (3, 'Donald', 'Turner', 'tdonald@hotmail.ca', 45, 'Hotel Manager');
