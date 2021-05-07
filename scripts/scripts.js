@@ -2,7 +2,7 @@
 
 const profileTemplate = ({ ID, firstName, lastName, email, age, job }) =>
   `
-  <div>
+  <div class="box">
     <div id="input${ID}"></div>
     <p>${firstName}</p>
     <p>${lastName}</p>
@@ -38,7 +38,7 @@ const setUpForEdit = (firstName, lastName, email, age, job) => {
   $("#addProfileBtn").text("UPDATE");
   $("#addProfileBtn").addClass("updateBtn");
   $("#addProfileBtn").removeClass("addProfileBtn");
-  $("#inputField").css("background-color", "yellow");
+  $("#inputField").css("background-color", "lightblue");
 };
 
 const setUpForAdd = () => {

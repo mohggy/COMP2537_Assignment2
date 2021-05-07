@@ -1,25 +1,23 @@
 #container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-areas:
     "nav"
     "content";
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 8% 92%;
 }
 
 body {
   position: relative;
+  background-color: rgb(37, 68, 109);
 }
 
 #content {
   grid-area: content;
 }
 fieldset {
-  border: 1px solid black;
   margin: 20px;
-  -webkit-box-shadow: 5px 5px 15px 5px #000000;
-  box-shadow: 5px 5px 15px 5px #000000;
 }
 
 #addProfileBtn {
@@ -28,15 +26,19 @@ fieldset {
 }
 #navbar {
   grid-area: nav;
-  background-color: gainsboro;
+  background-color: lightblue;
 }
 
 #navbar p {
   text-align: center;
   text-transform: uppercase;
   font-weight: 900;
-  font-family: "Catamaran", sans-serif;
+  font-family: 'Goblin One', cursive;
   font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  font-size: 25px;
+  margin-top: -25px;
 }
 
 body {
@@ -45,4 +47,50 @@ body {
 
 h3 {
     text-align: center;
+    color: white;
+}
+
+.box {
+  display: block;
+  width: 95%;
+  margin: auto;
+  border-radius: 25px;
+  background-color: white;
+  border: black;
+  border-color: black;
+  margin: 20px;
+}
+
+.box p {
+  margin-left: 30px;
+}
+
+#userInput {
+  background-color: white;
+  border-radius: 25px;
+}
+
+#menu {
+  width: 45px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.deleteProfileBtn {
+  border-radius: 25px;
+  margin-left: 10px;
+}
+
+.addProfileBtn {
+  border-radius: 25px;
+}
+
+.editProfileBtn {
+  border-radius: 25px;
+}
+
+.cancelBtn {
+  border-radius: 25px;
 }
