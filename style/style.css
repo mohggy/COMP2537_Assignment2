@@ -5,7 +5,7 @@
   grid-template-areas:
     "nav"
     "content";
-  grid-template-rows: 100px 800px;
+  grid-template-rows: 120px 800px;
 }
 
 body {
@@ -91,4 +91,8 @@ h3 {
 
 .cancelBtn {
   border-radius: 25px;
+}
+
+h5 {
+  margin-left: 40px;
 }
